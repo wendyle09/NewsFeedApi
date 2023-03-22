@@ -23,7 +23,7 @@ namespace NewsFeedApi.Models
 
             foreach (string term in searchTerms)
             {
-                string pattern = @"(^|\s)" + term.ToLower() + @"([\s']|$)";
+                string pattern = @"(^|[-\s])" + term.ToLower() + @"(es|s)?([-'’\s]|$)";
 
                 if (Regex.IsMatch(titleLowerCase, pattern))
                 {
