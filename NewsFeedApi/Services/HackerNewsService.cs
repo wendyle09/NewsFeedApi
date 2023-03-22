@@ -16,6 +16,28 @@ namespace NewsFeedApi.Services
             _memoryCache = memoryCache;
         }
 
+        public async Task<List<Story>> GetLatestStoriesWithDetails()
+        {
+            List<int> storyIds = await GetLatestStoryIds();
+
+            List<Story> stories = new List<Story>();
+
+            foreach (int storyId in storyIds)
+            {
+                Story? story = await GetStoryDetails(storyId);
+                if (story is not null)
+                {
+                    stories.Add(story);
+                }
+                else
+                {
+                    Console.WriteLine($"{storyId}");
+                }
+            }
+
+            return stories;
+        }
+
 		public async Task<List<int>> GetLatestStoryIds()
 		{
             HttpResponseMessage response = await client.GetAsync("v0/newstories.json");
@@ -28,32 +50,31 @@ namespace NewsFeedApi.Services
             return await response.Content.ReadFromJsonAsync<List<int>>() ?? new List<int>();
         }
 
-		public async Task<List<Story>> GetStoryDetails(List<int> storyIds)
+		public async Task<Story?> GetStoryDetails(int storyId)
 		{
-            List<Story> stories = new List<Story>();
+            Story? cachedStory = _memoryCache.Get<Story>(key: storyId.ToString());
 
-            foreach (int storyId in storyIds)
+            if (cachedStory is not null)
             {
-                Story? cachedStory = _memoryCache.Get<Story>(key: storyId.ToString());
+                return cachedStory;
+            }
+            else
+            {
+                return await GetStoryDetailsFromApi(storyId);
+            }
+        }
 
-                if (cachedStory is not null)
-                {
-                    stories.Add(cachedStory);
-                }
-                else
-                {
-                    HttpResponseMessage storyDetails = await client.GetAsync($"v0/item/{storyId}.json");
-                    Story? story = await storyDetails.Content.ReadFromJsonAsync<Story>();
+        private async Task<Story?> GetStoryDetailsFromApi(int storyId)
+        {
+            HttpResponseMessage storyDetails = await client.GetAsync($"v0/item/{storyId}.json");
+            Story? story = await storyDetails.Content.ReadFromJsonAsync<Story>();
 
-                    if (story is not null)
-                    {
-                        _memoryCache.Set(storyId.ToString(), story, GetCacheItemPolicy());
-                        stories.Add(story);
-                    }
-                }
+            if (story is not null)
+            {
+                _memoryCache.Set(storyId.ToString(), story, GetCacheItemPolicy());
             }
 
-            return stories;
+            return story;
         }
 
         private MemoryCacheEntryOptions GetCacheItemPolicy()
