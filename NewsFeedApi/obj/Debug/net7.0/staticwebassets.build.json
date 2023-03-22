@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "13WajqGyxr2TFHckCcWOjw78LkxI97DQzQvGXXje7ZI=",
+  "Source": "NewsFeedApi",
+  "BasePath": "_content/NewsFeedApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
