@@ -16,10 +16,14 @@
     <None Remove="Services\" />
     <None Remove="Models\" />
     <None Remove="Helpers\" />
+    <None Remove="Search\" />
+    <None Remove="Pagination\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Search\" />
+    <Folder Include="Pagination\" />
   </ItemGroup>
 </Project>

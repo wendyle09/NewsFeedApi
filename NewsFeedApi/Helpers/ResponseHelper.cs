@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewsFeedApi.Pagination;
+
 namespace NewsFeedApi.Helpers
 {
 	public class ResponseHelper

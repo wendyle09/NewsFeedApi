@@ -29,10 +29,6 @@ namespace NewsFeedApi.Services
                 {
                     stories.Add(story);
                 }
-                else
-                {
-                    Console.WriteLine($"{storyId}");
-                }
             }
 
             return stories;

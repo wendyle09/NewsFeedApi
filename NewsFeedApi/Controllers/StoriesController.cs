@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Caching.Memory;
 using NewsFeedApi.Helpers;
 using NewsFeedApi.Models;
+using NewsFeedApi.Pagination;
+using NewsFeedApi.Search;
 using NewsFeedApi.Services;
 
 namespace NewsFeedApi.Controllers

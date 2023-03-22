@@ -1,4 +1,4 @@
-﻿namespace NewsFeedApi
+﻿namespace NewsFeedApi.Pagination
 {
 	public class PagedList<T>: List<T>
 	{

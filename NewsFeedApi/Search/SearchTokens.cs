@@ -1,4 +1,4 @@
-﻿namespace NewsFeedApi
+﻿namespace NewsFeedApi.Search
 {
 	public class SearchTokens
 	{
