@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using NewsFeedApi.Services;
 
 namespace NewsFeedApi.Controllers
@@ -14,7 +15,7 @@ namespace NewsFeedApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(int page = 0, int pageSize = 20)
+        public async Task<IActionResult> Get(int currentPage = 1, int pageSize = 20)
         {
             List<int> allStoryIds = await hackerNewsSvc.GetLatestStoryIds();
 
@@ -23,7 +24,7 @@ namespace NewsFeedApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            List<int> storyIds = allStoryIds.Skip((page + 1) * pageSize).Take(pageSize).ToList();
+            PagedList<int> storyIds = PagedList<int>.ToPagedList(allStoryIds, currentPage, pageSize);
 
             List<Story> storiesWithDetails = await hackerNewsSvc.GetStoryDetails(storyIds);
 
@@ -32,7 +33,43 @@ namespace NewsFeedApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            return Ok(storiesWithDetails);
+            var responseBody = new
+            {
+                metadata = GetMetadata<int>(storyIds, currentPage, pageSize, "stories"),
+                data = storiesWithDetails,
+            };
+
+            return Ok(responseBody);
+        }
+
+        private Object GetMetadata<T>(PagedList<T> pagedList, int currentPage, int pageSize, string queryPath)
+        {
+            var links = GetPaginationLinks<T>(pagedList, currentPage, pageSize, queryPath);
+
+            var metadata = new
+            {
+                pagedList.CurrentPage,
+                pagedList.HasNext,
+                pagedList.HasPrevious,
+                pagedList.PageSize,
+                pagedList.TotalCount,
+                pagedList.TotalPages,
+                links
+            };
+
+            return metadata;
+        }
+
+        private Object GetPaginationLinks<T> (PagedList<T> pagedList, int currentPage, int pageSize, string queryPath)
+        {
+            return new
+            {
+                self = $"/{queryPath}? page={currentPage}&pageSize={pageSize}",
+                previous = pagedList.HasPrevious ? $"/{queryPath}?page={currentPage - 1}&pageSize={pageSize}" : null,
+                next = pagedList.HasNext ? $"/{queryPath}?page={currentPage}&pageSize={pageSize}" : null,
+                first = $"/{queryPath}?page=1&pageSize={pageSize}",
+                last = $"/{queryPath}?page={pagedList.TotalPages}&pageSize={pageSize}"
+            };
         }
     }
 }

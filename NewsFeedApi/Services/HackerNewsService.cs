@@ -28,9 +28,13 @@
 
             foreach (int storyId in storyIds)
             {
+                // Check for story in cache before making API call
+
                 HttpResponseMessage storyDetails = await client.GetAsync($"v0/item/{storyId}.json");
                 Story story = await storyDetails.Content.ReadFromJsonAsync<Story>();
                 stories.Add(story);
+
+                // Add story to cache
             }
 
             return stories;
