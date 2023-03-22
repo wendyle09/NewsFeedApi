@@ -1,5 +1,6 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using NewsFeedApi.Models;
 using NewsFeedApi.Services;
 
 namespace NewsFeedApi.Controllers
@@ -9,7 +10,14 @@ namespace NewsFeedApi.Controllers
 
     public class StoriesController : Controller
     {
-        private HackerNewsService hackerNewsSvc = new HackerNewsService();
+        private IMemoryCache _memoryCache;
+        private HackerNewsService _hackerNewsSvc;
+
+        public StoriesController(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+            _hackerNewsSvc = new HackerNewsService(_memoryCache);
+        }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -17,7 +25,7 @@ namespace NewsFeedApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(int currentPage = 1, int pageSize = 20)
         {
-            List<int> allStoryIds = await hackerNewsSvc.GetLatestStoryIds();
+            List<int> allStoryIds = await _hackerNewsSvc.GetLatestStoryIds();
 
             if (!allStoryIds.Any())
             {
@@ -26,7 +34,7 @@ namespace NewsFeedApi.Controllers
 
             PagedList<int> storyIds = PagedList<int>.ToPagedList(allStoryIds, currentPage, pageSize);
 
-            List<Story> storiesWithDetails = await hackerNewsSvc.GetStoryDetails(storyIds);
+            List<Story> storiesWithDetails = await _hackerNewsSvc.GetStoryDetails(storyIds);
 
             if (!storiesWithDetails.Any())
             {

@@ -1,4 +1,4 @@
-﻿namespace NewsFeedApi
+﻿namespace NewsFeedApi.Models
 {
     public class Story
     {
