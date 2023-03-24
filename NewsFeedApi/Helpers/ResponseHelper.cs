@@ -26,7 +26,7 @@ namespace NewsFeedApi.Helpers
         {
             return new
             {
-                self = $"/{queryPath}? page={currentPage}&pageSize={pageSize}",
+                self = $"/{queryPath}?page={currentPage}&pageSize={pageSize}",
                 previous = pagedList.HasPrevious ? $"/{queryPath}?page={currentPage - 1}&pageSize={pageSize}" : null,
                 next = pagedList.HasNext ? $"/{queryPath}?page={currentPage}&pageSize={pageSize}" : null,
                 first = $"/{queryPath}?page=1&pageSize={pageSize}",

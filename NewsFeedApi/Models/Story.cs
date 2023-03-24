@@ -6,11 +6,11 @@ namespace NewsFeedApi.Models
     {
         public int Id { get; set; }
 
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = String.Empty;
 
         public int Time { get; set; }
 
-        public string? Url { get; set; }
+        public string Url { get; set; } = String.Empty;
 
         public Boolean HasSearchTerms(string[] searchTerms)
         {
@@ -23,7 +23,7 @@ namespace NewsFeedApi.Models
 
             foreach (string term in searchTerms)
             {
-                string pattern = @"(^|[-\s])" + term.ToLower() + @"(es|s)?([-'’\s]|$)";
+                string pattern = @"(^|[-\s])" + term.ToLower() + @"(es|s)?([-'’:\s]|$)";
 
                 if (Regex.IsMatch(titleLowerCase, pattern))
                 {

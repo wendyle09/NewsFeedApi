@@ -26,7 +26,7 @@ namespace NewsFeedApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get(int currentPage = 1, int pageSize = 20, string search = "")
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 20, string search = "")
         {
             List<Story> storiesWithDetails = await _hackerNewsSvc.GetLatestStoriesWithDetails();
 
@@ -39,18 +39,18 @@ namespace NewsFeedApi.Controllers
 
             if (search == "")
             {
-                pagedStories = PagedList<Story>.ToPagedList(storiesWithDetails, currentPage, pageSize);
+                pagedStories = PagedList<Story>.ToPagedList(storiesWithDetails, pageNumber, pageSize);
             }
             else
             {
                 SearchTokens searchTokens = new SearchTokens(search);
                 List<Story> filteredStories = storiesWithDetails.Where(story => story.HasSearchTerms(searchTokens.Filtered)).ToList<Story>();
-                pagedStories = PagedList<Story>.ToPagedList(filteredStories, currentPage, pageSize);
+                pagedStories = PagedList<Story>.ToPagedList(filteredStories, pageNumber, pageSize);
             }
 
             var responseBody = new
             {
-                metadata = ResponseHelper.GetMetadata<Story>(pagedStories, currentPage, pageSize, "stories"),
+                metadata = ResponseHelper.GetMetadata<Story>(pagedStories, pageNumber, pageSize, "stories"),
                 data = pagedStories,
             };
 
