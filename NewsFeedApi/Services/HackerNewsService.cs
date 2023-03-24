@@ -3,7 +3,14 @@ using NewsFeedApi.Models;
 
 namespace NewsFeedApi.Services
 {
-	public class HackerNewsService
+    public interface IHackerNewsService
+    {
+        Task<List<Story>> GetLatestStoriesWithDetails();
+        Task<List<int>> GetLatestStoryIds();
+        Task<Story?> GetStoryDetails(int storyId);
+    }
+
+    public class HackerNewsService : IHackerNewsService
 	{
         private readonly IMemoryCache _memoryCache;
         private HttpClient client;

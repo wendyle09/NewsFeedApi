@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using NewsFeedApi.Helpers;
 using NewsFeedApi.Models;
 using NewsFeedApi.Pagination;
@@ -13,13 +12,11 @@ namespace NewsFeedApi.Controllers
 
     public class StoriesController : Controller
     {
-        private IMemoryCache _memoryCache;
-        private HackerNewsService _hackerNewsSvc;
+        private IHackerNewsService _hackerNewsSvc;
 
-        public StoriesController(IMemoryCache memoryCache)
+        public StoriesController(IHackerNewsService hackerNewsService)
         {
-            _memoryCache = memoryCache;
-            _hackerNewsSvc = new HackerNewsService(_memoryCache);
+            _hackerNewsSvc = hackerNewsService;
         }
 
         [HttpGet]

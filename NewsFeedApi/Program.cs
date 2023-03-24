@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewsFeedApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
 builder.Services.AddCors(options =>
