@@ -1,18 +1,18 @@
 ﻿using NewsFeedApi.Pagination;
+using NewsFeedApi.Response;
 
 namespace NewsFeedApi.Helpers
 {
 	public class ResponseHelper
 	{
-		public static Object GetMetadata<T>(PagedList<T> pagedList, int currentPage, int pageSize)
+		public static Metadata GetMetadata<T>(PagedList<T> pagedList, int currentPage, int pageSize)
         {
-            return new
-            {
+            return new Metadata(
                 pagedList.CurrentPage,
                 pagedList.PageSize,
                 pagedList.TotalCount,
-                pagedList.TotalPages,
-            };
+                pagedList.TotalPages
+            );
         }
     }
 }

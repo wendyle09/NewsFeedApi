@@ -27,9 +27,13 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="Services\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NewsFeedApi\NewsFeedApi.csproj" />

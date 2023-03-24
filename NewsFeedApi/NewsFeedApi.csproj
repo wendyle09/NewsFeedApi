@@ -19,6 +19,7 @@
     <None Remove="Helpers\" />
     <None Remove="Search\" />
     <None Remove="Pagination\" />
+    <None Remove="Response\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -26,5 +27,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="Search\" />
     <Folder Include="Pagination\" />
+    <Folder Include="Response\" />
   </ItemGroup>
 </Project>
