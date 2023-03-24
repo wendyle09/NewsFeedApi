@@ -47,7 +47,7 @@ namespace NewsFeedApi.Controllers
 
             var responseBody = new
             {
-                metadata = ResponseHelper.GetMetadata<Story>(pagedStories, pageNumber, pageSize, "stories"),
+                metadata = ResponseHelper.GetMetadata<Story>(pagedStories, pageNumber, pageSize),
                 data = pagedStories,
             };
 
