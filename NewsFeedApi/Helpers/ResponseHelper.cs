@@ -4,7 +4,7 @@ namespace NewsFeedApi.Helpers
 {
 	public class ResponseHelper
 	{
-		public static Object GetMetadata<T>(PagedList<T> pagedList, int currentPage, int pageSize, string queryPath)
+		public static Object GetMetadata<T>(PagedList<T> pagedList, int currentPage, int pageSize)
         {
             return new
             {
