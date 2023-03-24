@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1705.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsFeedApi", "NewsFeedApi\NewsFeedApi.csproj", "{3554A2A7-4374-43A9-8306-D4583A3A9414}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsFeedApi.Tests", "NewsFeedApi.Tests\NewsFeedApi.Tests.csproj", "{C1B0E8CF-6398-44B8-A274-EB15E289F7FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3554A2A7-4374-43A9-8306-D4583A3A9414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3554A2A7-4374-43A9-8306-D4583A3A9414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3554A2A7-4374-43A9-8306-D4583A3A9414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B0E8CF-6398-44B8-A274-EB15E289F7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B0E8CF-6398-44B8-A274-EB15E289F7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B0E8CF-6398-44B8-A274-EB15E289F7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B0E8CF-6398-44B8-A274-EB15E289F7FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
